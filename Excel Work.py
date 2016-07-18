@@ -101,10 +101,10 @@ def name_check_in(name):
 def check_in(number=None, name=None):
     if number is not None:
         # Name based check in
-        number_check_in(number)
+        name_check_in(name.lower())
     else:
         # Number based check in
-        name_check_in(name.lower())
+        number_check_in(number)
 
 
 def approve_payment(identifier):
