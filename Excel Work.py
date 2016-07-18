@@ -20,7 +20,8 @@ def find(findValue, row=None, column=None):
             for cell in row:
                 if cell.value is findValue:
                     return cell.row, ColToInt(cell.column)
-    elif row is not None and column is None:
+
+    elif row is not None and column is None:  # scanning through a row
         index = 1
         while True:
             cell = ws.cell(row=row, column=index)
@@ -28,13 +29,17 @@ def find(findValue, row=None, column=None):
                 return cell.row, ColToInt(cell.column)
             index += 1
 
-    elif row is None and column is not None:
-        index = 1
+    elif row is None and column is not None:  # scanning through a column
+        index = 2
+        lastCell = ws.cell(row=index - 1, column=column)
         while True:
             cell = ws.cell(row=index, column=column)
+            if lastCell.value is None and cell.value is None:
+                return None, None
             if cell.value == findValue:
                 return cell.row, ColToInt(cell.column)
             index += 1
+            lastCell = cell
 
 
 def create_attendance_date(row, column):  # Creates meeting date
@@ -68,10 +73,16 @@ def find_empty_date_column():
         lastCell = cell
 
 
+def emptyRow():
+    return find(None, None, 1)[0]
+
+
 def number_check_in(num):
     timeIn = strftime("%I:%M %p")
     row, col = find(num, None, 1)
-    if ws.cell(row=row, column=col).value is None:
+    if row is None and col is None:
+        add_member()
+    elif ws.cell(row=row, column=col).value is None:
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
     save()
 
@@ -79,7 +90,9 @@ def number_check_in(num):
 def name_check_in(name):
     timeIn = strftime("%I:%M %p")
     row, col = find(name, None, 2)
-    if ws.cell(row=row, column=col).value is None:
+    if row is None and col is None:
+        add_member()
+    elif ws.cell(row=row, column=col).value is None:
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
     save()
 
@@ -93,6 +106,31 @@ def check_in(number=None, name=None):
         name_check_in(name.lower())
 
 
+def approve_payment(identifier):
+    if isinstance(identifier, str):
+        identifier = identifier.lower()
+        coll = 2
+    else:
+        coll = 1
+    row, col = find(identifier, None, coll)
+    if ws.cell(row=row, column=3).value is None:
+        ws.cell(row=row, column=3, value='PAID')
+    save()
+
+
+def add_member():
+    Fn = input('Enter First Name: ')
+    Ln = input('Enter Last Name: ')
+    FLname = Fn + Ln
+    FLname = FLname.lower()
+    number = int(input('Number: '))
+    row = emptyRow()
+    ws.cell(row=row, column=1, value=number)
+    ws.cell(row=row, column=2, value=FLname)
+    save()
+
+
 find_empty_date_column()
-name_check_in('LF')
-number_check_in(2)
+# name_check_in('J')
+# number_check_in(3)
+# approve_payment('JJ')

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="88aed886-207c-4973-8511-82c2f161edd3" name="Default" comment="Updated find_empty_date_column&#10;added find &#10;added name based check in&#10;added number ID based check in&#10;">
+    <list default="true" id="88aed886-207c-4973-8511-82c2f161edd3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ATT.xlsx" afterPath="$PROJECT_DIR$/ATT.xlsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Barcode Scanner.iml" afterPath="$PROJECT_DIR$/.idea/Barcode Scanner.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Excel Work.py" afterPath="$PROJECT_DIR$/Excel Work.py" />
     </list>
@@ -54,15 +52,13 @@
       <file leaf-file-name="Excel Work.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Excel Work.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.75">
-              <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.49940404">
+              <caret line="122" column="35" selection-start-line="122" selection-start-column="35" selection-end-line="122" selection-end-column="35" />
               <folding>
-                <element signature="e#0#34#0" expanded="true" />
                 <element signature="e#317#334#0" expanded="false" />
-                <element signature="e#385#1163#0" expanded="false" />
-                <element signature="e#1235#1389#0" expanded="false" />
-                <element signature="e#1426#2260#0" expanded="false" />
-                <element signature="e#2293#2482#0" expanded="false" />
+                <element signature="e#1472#1626#0" expanded="false" />
+                <element signature="e#1663#2497#0" expanded="false" />
+                <element signature="e#3156#3318#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -131,19 +127,19 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Barcode Scanner" />
+              <option name="myItemId" value="Barcode-Scanner" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Barcode Scanner" />
+              <option name="myItemId" value="Barcode-Scanner" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -161,40 +157,6 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager" selected="Python.Excel Work">
-    <configuration default="false" name="Ploting Attendance" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Barcode Scanner" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Ploting Attendance.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Tkinter Interface" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Barcode Scanner" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Tkinter Interface.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="Excel Work" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -206,7 +168,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Barcode Scanner" />
+      <module name="Barcode-Scanner" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Excel Work.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -334,16 +296,12 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="3">
-      <item index="0" class="java.lang.String" itemvalue="Python.Ploting Attendance" />
-      <item index="1" class="java.lang.String" itemvalue="Python.Tkinter Interface" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Excel Work" />
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Python.Excel Work" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="1">
         <item index="0" class="java.lang.String" itemvalue="Python.Excel Work" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Tkinter Interface" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Ploting Attendance" />
       </list>
     </recent_temporary>
   </component>
@@ -376,23 +334,29 @@
       <option name="project" value="LOCAL" />
       <updated>1468795118227</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updated find_empty_date_column&#10;added find &#10;added name based check in&#10;added number ID based check in&#10;">
+      <created>1468800095527</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1468800095528</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2400636" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14705883" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328341" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.50317967" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47235024" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.7162162" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47174165" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.49682036" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39976957" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39907727" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -416,11 +380,49 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added Save &#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="added Save &#10;" />
+    <MESSAGE value="Updated find_empty_date_column&#10;added find &#10;added name based check in&#10;added number ID based check in&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated find_empty_date_column&#10;added find &#10;added name based check in&#10;added number ID based check in&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="15" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Excel Work.py</url>
+          <line>128</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Excel Work.py</url>
+          <line>127</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Excel Work.py</url>
+          <line>126</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Excel Work.py</url>
+          <line>125</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Excel Work.py</url>
+          <line>124</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Excel Work.py</url>
+          <line>114</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Excel Work.py</url>
+          <line>115</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="50" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -454,12 +456,51 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
             <element signature="e#317#334#0" expanded="false" />
-            <element signature="e#385#1163#0" expanded="false" />
-            <element signature="e#1235#1389#0" expanded="false" />
-            <element signature="e#1426#2260#0" expanded="false" />
-            <element signature="e#2293#2482#0" expanded="false" />
+            <element signature="e#1472#1626#0" expanded="false" />
+            <element signature="e#1663#2497#0" expanded="false" />
+            <element signature="e#3156#3318#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35-32/Lib/site-packages/openpyxl/worksheet/worksheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="299" column="0" selection-start-line="299" selection-start-column="0" selection-end-line="299" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ploting Attendance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tkinter Interface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Excel Work.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#317#334#0" expanded="false" />
+            <element signature="e#1472#1626#0" expanded="false" />
+            <element signature="e#1663#2497#0" expanded="false" />
+            <element signature="e#3156#3318#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -489,12 +530,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
             <element signature="e#317#334#0" expanded="false" />
-            <element signature="e#385#1163#0" expanded="false" />
-            <element signature="e#1235#1389#0" expanded="false" />
-            <element signature="e#1426#2260#0" expanded="false" />
-            <element signature="e#2293#2482#0" expanded="false" />
+            <element signature="e#1472#1626#0" expanded="false" />
+            <element signature="e#1663#2497#0" expanded="false" />
+            <element signature="e#3156#3318#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -524,12 +563,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
             <element signature="e#317#334#0" expanded="false" />
-            <element signature="e#385#1163#0" expanded="false" />
-            <element signature="e#1235#1389#0" expanded="false" />
-            <element signature="e#1426#2260#0" expanded="false" />
-            <element signature="e#2293#2482#0" expanded="false" />
+            <element signature="e#1472#1626#0" expanded="false" />
+            <element signature="e#1663#2497#0" expanded="false" />
+            <element signature="e#3156#3318#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -628,14 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35-32/Lib/site-packages/openpyxl/worksheet/worksheet.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -646,15 +675,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Excel Work.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75">
-          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.49940404">
+          <caret line="122" column="35" selection-start-line="122" selection-start-column="35" selection-end-line="122" selection-end-column="35" />
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
             <element signature="e#317#334#0" expanded="false" />
-            <element signature="e#385#1163#0" expanded="false" />
-            <element signature="e#1235#1389#0" expanded="false" />
-            <element signature="e#1426#2260#0" expanded="false" />
-            <element signature="e#2293#2482#0" expanded="false" />
+            <element signature="e#1472#1626#0" expanded="false" />
+            <element signature="e#1663#2497#0" expanded="false" />
+            <element signature="e#3156#3318#0" expanded="false" />
           </folding>
         </state>
       </provider>
