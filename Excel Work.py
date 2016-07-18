@@ -82,17 +82,18 @@ def number_check_in(num):
     row, col = find(num, None, 1)
     if row is None and col is None:
         add_member()
-    elif ws.cell(row=row, column=col).value is None:
+    elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
+        timeIn = strftime("%I:%M %p")
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
     save()
 
 
 def name_check_in(name):
-    timeIn = strftime("%I:%M %p")
     row, col = find(name, None, 2)
     if row is None and col is None:
         add_member()
-    elif ws.cell(row=row, column=col).value is None:
+    elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
+        timeIn = strftime("%I:%M %p")
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
     save()
 
@@ -131,6 +132,6 @@ def add_member():
 
 
 find_empty_date_column()
-# name_check_in('J')
-# number_check_in(3)
-# approve_payment('JJ')
+name_check_in('xc')
+# number_check_in(99)
+# approve_payment('js')
