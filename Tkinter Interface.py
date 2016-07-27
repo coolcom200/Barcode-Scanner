@@ -59,18 +59,21 @@ m1.add(bottom)
 
 
 def display_member_info(memberIndex):
-
-
     def member_info_template(name='Not Applicable', number='Not Applicable', paid='NO'):
-        global nameLab, numLab, payLab
+        global a
+        if name == paid == number and name == 'None':
+            color1, color2, color3 = 'white', 'white', 'white'
+        else:
+            color1, color2, color3 = 'white', 'lightgreen', 'lightgreen'
 
-        color1, color2, color3 = 'white', 'Red', 'Red'
         if name == 'Not Applicable':
             color1 = 'Red'
-        if paid != 'NO':
-            color3 = 'lightGreen'
-        if number != 'Not Applicable':
-            color2 = 'lightGreen'
+
+        if paid == 'NO':
+            color3 = 'Red'
+
+        if number == 'Not Applicable':
+            color2 = 'red'
 
         nameLab = Label(bottom, text='Name: ' + name, font='Times 15 bold', bg=color1)
         nameLab.grid(row=1, column=1, sticky=W)
@@ -79,30 +82,39 @@ def display_member_info(memberIndex):
         numLab.grid(row=2, column=1, sticky=W)
         payLab = Label(bottom, text='Paid: ' + paid, font='Times 15 bold', bg=color3)
         payLab.grid(row=3, column=1, sticky=W)
+        return [nameLab, numLab, payLab]
 
     memberIndex = (str(memberIndex))
     memberIndex = memberIndex.replace('(', '')
     memberIndex = memberIndex.replace(')', '')
     memberIndex = memberIndex.replace(',', '')
     if memberIndex is '':
-        pass
+        labelIDs = member_info_template('None', 'None', 'None')
+
     else:
         memberIndex = int(memberIndex)
-        member_info_template(e[memberIndex])
+        labelIDs = member_info_template(e[memberIndex])
+    return labelIDs
+
+
+def clean_mem_info_panel(labelIDList):
+    if labelIDList is None:
+        pass
+    else:
+        l1, l2, l3 = labelIDList[0], labelIDList[1], labelIDList[2]
+        l1.destroy()
+        l2.destroy()
+        l3.destroy()
 
 
 def check_selection():
-    def clean_mem_info_panel():
-        numLab.destroy()
-        nameLab.destroy()
-        payLab.destroy()
+    b = None
     lastPos = 0
     while True:
         curSelect = dataList.curselection()
         if curSelect != lastPos:
-
-            display_member_info(curSelect)
-            clean_mem_info_panel()
+            clean_mem_info_panel(b)
+            b = display_member_info(curSelect)
         else:
             pass
         time.sleep(0.1)
