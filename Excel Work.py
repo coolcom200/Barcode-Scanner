@@ -98,13 +98,13 @@ def name_check_in(name):
     save()
 
 
-def check_in(number=None, name=None):
-    if number is not None:
+def check_in(identifier):
+    if isinstance(identifier, str):
         # Name based check in
-        name_check_in(name.lower())
+        name_check_in(identifier.lower())
     else:
         # Number based check in
-        number_check_in(number)
+        number_check_in(identifier)
 
 
 def approve_payment(identifier):
