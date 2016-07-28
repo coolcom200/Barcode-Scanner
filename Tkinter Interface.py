@@ -2,11 +2,13 @@ from tkinter import *
 import threading
 import time
 from sys import exit as Stp
-
+from tkinter.ttk import *
 e = ['Wilson', 'Winters', 'Wise', 'Witt', 'Wolf', 'Wolfe', 'Wong', 'Wood', 'Woodard', 'Woods', 'Woodward', 'Wooten',
      'Workman', 'Wright', 'Wyatt', 'Wynn', 'Yang', 'Yates', 'York', 'Young', 'Zamora', 'Zimmerman']
 
 root = Tk()
+root.resizable(width=False, height=False)
+Style().configure("TButton", relief="flat", padding=5, font='Times 14 bold')
 
 menubar = Menu(root)
 menuB = Menu(menubar, tearoff=0)
@@ -52,17 +54,18 @@ def retrieve_entry():
     print(x)
 
 
-sub = Button(top, text='Clear', command=lambda: barcodeEntry.delete(0, END)).pack(side=LEFT)
+clearEntry = Button(top, text='Clear', command=lambda: barcodeEntry.delete(0, END)).pack(side=LEFT)
 
-right = Frame(m1)
-m1.add(right)
+middle = Frame(m1)
+m1.add(middle)
 
 # Members List
-scBr = Scrollbar(right)
+scBr = Scrollbar(middle)
 scBr.pack(side=RIGHT, fill=Y)
 
-dataList = Listbox(right, selectmode=SINGLE, font='Times 15 bold', yscrollcommand=scBr.set)
+dataList = Listbox(middle, selectmode=SINGLE, font='Times 15 bold', yscrollcommand=scBr.set)
 scBr.configure(command=dataList.yview)
+
 dataList.insert(END, *e)
 dataList.pack(fill=BOTH)
 
@@ -88,12 +91,12 @@ def display_member_info(memberIndex):
         if number == 'Not Applicable':
             color2 = 'red'
 
-        nameLab = Label(bottom, text='Name: ' + name, font='Times 15 bold', bg=color1)
+        nameLab = Label(bottom, text='Name: ' + name, font='Times 15 bold')
         nameLab.grid(row=1, column=1, sticky=W)
-        numLab = Label(bottom, text='Number: ' + str(number), font='Times 15 bold', bg=color2)
+        numLab = Label(bottom, text='Number: ' + str(number), font='Times 15 bold')
         print(numLab)
         numLab.grid(row=2, column=1, sticky=W)
-        payLab = Label(bottom, text='Paid: ' + paid, font='Times 15 bold', bg=color3)
+        payLab = Label(bottom, text='Paid: ' + paid, font='Times 15 bold')
         payLab.grid(row=3, column=1, sticky=W)
         return [nameLab, numLab, payLab]
 
