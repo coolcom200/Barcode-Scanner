@@ -8,6 +8,19 @@ e = ['Wilson', 'Winters', 'Wise', 'Witt', 'Wolf', 'Wolfe', 'Wong', 'Wood', 'Wood
 
 root = Tk()
 
+menubar = Menu(root)
+menuB = Menu(menubar, tearoff=0)
+menuB2 = Menu(menubar, tearoff=0)
+menuB3 = Menu(menubar, tearoff=1)
+menuB.add_command(label="Exit", command=lambda: quit_handler())
+menuB2.add_command(label="Attendance Graph")
+menuB2.add_command(label='Total Member present')
+menuB2.add_command(label='Credit Eligible Members')
+menubar.add_cascade(label="File", menu=menuB)
+menubar.add_cascade(label='Analyze', menu=menuB2)
+menubar.add_cascade(label='Help', menu=menuB3)
+root.configure(menu=menubar)
+
 m1 = PanedWindow(height=650, width=1000, orient=VERTICAL)
 m1.pack(fill=BOTH, expand=1)
 
