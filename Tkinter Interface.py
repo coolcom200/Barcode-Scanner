@@ -130,44 +130,47 @@ def add_member(identifier, strr=False):
     choice = messagebox.askquestion('Not In Database',
                                     'Sorry you are not in the database.\nWould you like to become a member?')
 
+    def create_mem_row(num, name):
+        num = int(num)
+        row = emptyRow()
+        ws.cell(row=row, column=1, value=num)
+        ws.cell(row=row, column=2, value=name)
+        check_in(num, False)
+        save()
+
     if choice == 'yes':
-        memTop = Toplevel()
-        questionF = Frame(memTop)
+        FLname = None
+        StuNumber = None
+        questionF = Toplevel()
         if strr:
             FLname = identifier
-            Label(questionF, text='Enter Student Number:').grid(row=1, column=1, sticky=W)
+            Label(questionF, text='Enter Student Number:').pack()
             num = Entry(questionF)
-            num.grid(row=1, column=2, sticky=W)
+            num.pack()
 
             def num_ret():
-                global StuNumber
                 StuNumber = num.get()
                 questionF.destroy()
+                create_mem_row(StuNumber, FLname)
 
-            Button(questionF, text='Submit', command=num_ret).grid(row=2, column=1, sticky=W)
-
+            Button(questionF, text='Submit', command=num_ret).pack()
 
         else:
             StuNumber = identifier
-            Label(questionF, text='Enter First Name: ').grid(row=1, column=1, sticky=W)
+            Label(questionF, text='Enter First Name: ').pack()
             Fn = Entry(questionF)
-            Fn.grid(row=1, column=2, sticky=W)
-            Label(questionF, text='Enter Last Name: ').grid(row=2, column=1, sticky=W)
+            Fn.pack()
+            Label(questionF, text='Enter Last Name: ').pack()
             Ln = Entry(questionF)
-            Ln.grid(row=2, column=2, sticky=W)
+            Ln.pack()
 
             def name_ret():
-                global FLname
                 FLname = Fn.get() + ' ' + Ln.get()
                 FLname = FLname.lower()
+                create_mem_row(StuNumber, FLname)
                 questionF.destroy()
 
-        row = emptyRow()
-        ws.cell(row=row, column=1, value=StuNumber)
-        ws.cell(row=row, column=2, value=FLname)
-        check_in(StuNumber, False)
-        Button(questionF, text='Submit', command=name_ret).grid(row=3, column=1, sticky=W)
-        save()
+            Button(questionF, text='Submit', command=name_ret).pack()
 
 
 def check_eligible(ID):
