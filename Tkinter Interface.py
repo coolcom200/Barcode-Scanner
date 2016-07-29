@@ -102,10 +102,11 @@ def name_check_in(name):
     save()
 
 
-def check_in(identifier):
+def check_in(identifier, name):
     find_empty_date_column()
-    if isinstance(identifier, str):
+    if name:
         # Name based check in
+        popup.destroy()
         name_check_in(identifier.lower())
     else:
         # Number based check in
@@ -150,6 +151,31 @@ root = Tk()
 root.resizable(width=False, height=False)
 Style().configure("TButton", relief="flat", padding=5, font='Times 14 bold')
 
+
+def name_check_in_GUI():
+    global popup, FN, LN
+    popup = Toplevel()
+    popup.tkraise(root)
+    Label(popup, text='Enter First Name').grid(row=1, column=1, sticky=W)
+    FN = Entry(popup, font='Times 15 bold')
+    FN.grid(row=1, column=2, sticky=W)
+    Label(popup, text='Enter Last Name').grid(row=2, column=1, sticky=W)
+    LN = Entry(popup, font='Times 15 bold')
+    LN.grid(row=2, column=2, sticky=W)
+    Button(popup, text='Check In', command=lambda: retrieve_name_entry()).grid(row=3, column=1, sticky=W)
+
+
+def retrieve_name_entry():
+    f = FN.get()
+    l = LN.get()
+    if f == '' or l == '':
+        FN.delete(0, END)
+        LN.delete(0, END)
+    else:
+        name = f + ' ' + l
+        check_in(name, True)
+
+
 menubar = Menu(root)
 menuB = Menu(menubar, tearoff=0)
 menuB2 = Menu(menubar, tearoff=0)
@@ -170,7 +196,7 @@ m1.pack(fill=BOTH, expand=1)
 top = Frame(m1)
 m1.add(top)
 
-barcodeEntry = Entry(top, font='Times 24 bold', width=50)
+barcodeEntry = Entry(top, font='Times 24 bold', width=44)
 barcodeEntry.pack(side=LEFT)
 
 
@@ -188,14 +214,17 @@ thr.daemon = True
 thr.start()
 
 
-def retrieve_entry():
-    num = barcodeEntry.get()
-    num = int(num)
+def retrieve_entry(name=False):
+    identifier = barcodeEntry.get()
+    if name is False:
+        identifier = int(identifier)
+
     barcodeEntry.delete(0, END)
-    check_in(num)
+    check_in(identifier, name)
 
 
 clearEntry = Button(top, text='Clear', command=lambda: barcodeEntry.delete(0, END)).pack(side=LEFT)
+nameEntry = Button(top, text='Name Check In', command=name_check_in_GUI).pack(side=LEFT)
 
 middle = Frame(m1)
 m1.add(middle)
@@ -221,7 +250,7 @@ def display_member_info(memberIndex):
         if name == paid == number and name == 'None':
             color1, color2, color3, color4 = None, None, None, None
         else:
-            color1, color2, color3, color4 = 'white', 'lightgreen', 'lightgreen','red'
+            color1, color2, color3, color4 = 'white', 'lightgreen', 'lightgreen', 'red'
         eligible = check_eligible(memberIndex)
 
         if name == 'Not Applicable':
@@ -246,8 +275,7 @@ def display_member_info(memberIndex):
         eligLab = Label(bottom, text='Eligible for Credit: ' + eligible, font='Times 15 bold', background=color4)
         eligLab.grid(row=4, column=1, sticky=W)
 
-
-        return [nameLab, numLab, payLab,eligLab]
+        return [nameLab, numLab, payLab, eligLab]
 
     memberIndex = (str(memberIndex))
     memberIndex = memberIndex.replace('(', '')
