@@ -1,6 +1,7 @@
 from tkinter import *
 import threading
 import time
+from tkinter import messagebox
 from sys import exit as Stp
 from tkinter.ttk import *
 from openpyxl import load_workbook
@@ -86,7 +87,7 @@ def number_check_in(num):
     timeIn = strftime("%I:%M %p")
     row, col = find(num, None, 1)
     if row is None and col is None:
-        add_member()
+        add_member(num)
     elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
     save()
@@ -95,16 +96,16 @@ def number_check_in(num):
 def name_check_in(name):
     row, col = find(name, None, 2)
     if row is None and col is None:
-        add_member()
+        add_member(name, True)
     elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
         timeIn = strftime("%I:%M %p")
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
     save()
 
 
-def check_in(identifier, name):
+def check_in(identifier, UseName):
     find_empty_date_column()
-    if name:
+    if UseName:
         # Name based check in
         popup.destroy()
         name_check_in(identifier.lower())
@@ -125,16 +126,48 @@ def approve_payment(identifier):
     save()
 
 
-def add_member():
-    Fn = input('Enter First Name: ')
-    Ln = input('Enter Last Name: ')
-    FLname = Fn + Ln
-    FLname = FLname.lower()
-    number = int(input('Number: '))
-    row = emptyRow()
-    ws.cell(row=row, column=1, value=number)
-    ws.cell(row=row, column=2, value=FLname)
-    save()
+def add_member(identifier, strr=False):
+    choice = messagebox.askquestion('Not In Database',
+                                    'Sorry you are not in the database.\nWould you like to become a member?')
+
+    if choice == 'yes':
+        memTop = Toplevel()
+        questionF = Frame(memTop)
+        if strr:
+            FLname = identifier
+            Label(questionF, text='Enter Student Number:').grid(row=1, column=1, sticky=W)
+            num = Entry(questionF)
+            num.grid(row=1, column=2, sticky=W)
+
+            def num_ret():
+                global StuNumber
+                StuNumber = num.get()
+                questionF.destroy()
+
+            Button(questionF, text='Submit', command=num_ret).grid(row=2, column=1, sticky=W)
+
+
+        else:
+            StuNumber = identifier
+            Label(questionF, text='Enter First Name: ').grid(row=1, column=1, sticky=W)
+            Fn = Entry(questionF)
+            Fn.grid(row=1, column=2, sticky=W)
+            Label(questionF, text='Enter Last Name: ').grid(row=2, column=1, sticky=W)
+            Ln = Entry(questionF)
+            Ln.grid(row=2, column=2, sticky=W)
+
+            def name_ret():
+                global FLname
+                FLname = Fn.get() + ' ' + Ln.get()
+                FLname = FLname.lower()
+                questionF.destroy()
+
+        row = emptyRow()
+        ws.cell(row=row, column=1, value=StuNumber)
+        ws.cell(row=row, column=2, value=FLname)
+        check_in(StuNumber, False)
+        Button(questionF, text='Submit', command=name_ret).grid(row=3, column=1, sticky=W)
+        save()
 
 
 def check_eligible(ID):
@@ -246,7 +279,7 @@ m1.add(bottom)
 
 def display_member_info(memberIndex):
     def member_info_template(name='Not Applicable', number='Not Applicable', paid='NO'):
-        global a
+        # global number
         if name == paid == number and name == 'None':
             color1, color2, color3, color4 = None, None, None, None
         else:
