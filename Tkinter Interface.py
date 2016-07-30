@@ -90,6 +90,7 @@ def number_check_in(num):
         add_member(num)
     elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
+        add_name_listbox(row)
     save()
 
 
@@ -100,6 +101,7 @@ def name_check_in(name):
     elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
         timeIn = strftime("%I:%M %p")
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
+        add_name_listbox(row)
     save()
 
 
@@ -174,14 +176,14 @@ def add_member(identifier, strr=False):
 
 
 def check_eligible(ID):
+    # must add math to count attendance to classes
     if ID == 'None' or ID == '':
         return 'None'
     else:
         return 'Yes'
 
 
-e = ['Wilson', 'Winters', 'Wise', 'Witt', 'Wolf', 'Wolfe', 'Wong', 'Wood', 'Woodard', 'Woods', 'Woodward', 'Wooten',
-     'Workman', 'Wright', 'Wyatt', 'Wynn', 'Yang', 'Yates', 'York', 'Young', 'Zamora', 'Zimmerman']
+signInList = []
 
 root = Tk()
 root.resizable(width=False, height=False)
@@ -264,6 +266,7 @@ nameEntry = Button(top, text='Name Check In', command=name_check_in_GUI).pack(si
 
 middle = Frame(m1)
 m1.add(middle)
+Label(middle, text='Members that have checked in', font='Times 15 bold').pack(fill=Y)
 
 # Members List
 scBr = Scrollbar(middle)
@@ -272,8 +275,21 @@ scBr.pack(side=RIGHT, fill=Y)
 dataList = Listbox(middle, selectmode=SINGLE, font='Times 15 bold', yscrollcommand=scBr.set)
 scBr.configure(command=dataList.yview)
 
-dataList.insert(END, *e)
 dataList.pack(fill=BOTH)
+
+
+def add_name_listbox(row):
+    name = ws.cell(row=row, column=2).value
+    name = name.split(' ')
+    name = name[0][0].upper() + name[0][1:] + ' ' + name[1][0].upper() + name[1][1:]
+    number = ws.cell(row=row, column=1).value
+    paid = ws.cell(row=row, column=3).value
+    if paid is None:
+        paid = 'NO'
+    # must append values to list
+    dataList.insert(0, name)
+    signInList.insert(0, [name, number, paid])
+
 
 # Member information
 bottom = Frame(m1)
@@ -282,7 +298,6 @@ m1.add(bottom)
 
 def display_member_info(memberIndex):
     def member_info_template(name='Not Applicable', number='Not Applicable', paid='NO'):
-        # global number
         if name == paid == number and name == 'None':
             color1, color2, color3, color4 = None, None, None, None
         else:
@@ -304,7 +319,6 @@ def display_member_info(memberIndex):
         nameLab = Label(bottom, text='Name: ' + name, font='Times 15 bold', background=color1)
         nameLab.grid(row=1, column=1, sticky=W)
         numLab = Label(bottom, text='Number: ' + str(number), font='Times 15 bold', background=color2)
-        print(numLab)
         numLab.grid(row=2, column=1, sticky=W)
         payLab = Label(bottom, text='Paid: ' + paid, font='Times 15 bold', background=color3)
         payLab.grid(row=3, column=1, sticky=W)
@@ -321,8 +335,8 @@ def display_member_info(memberIndex):
         labelIDs = member_info_template('None', 'None', 'None')
 
     else:
-        memberIndex = int(memberIndex)
-        labelIDs = member_info_template(e[memberIndex])
+        memberIndex = int(memberIndex)  # must incoperate excel doc into display process
+        labelIDs = member_info_template(signInList[memberIndex][0],signInList[memberIndex][1],signInList[memberIndex][2])
     return labelIDs
 
 
