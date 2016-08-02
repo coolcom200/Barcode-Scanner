@@ -65,13 +65,13 @@ def find_empty_date_column():
             # uses the previous cell as the point at which to add the
             # date stamp
             create_attendance_date(lastCell.row, lastCell.column)
-            attCol = (cell.column)
+            attCol = lastCell.column
             break
 
         elif cell.value == date:
 
             # Makes attCol known to the whole program for attendance registration
-            attCol = (cell.column)
+            attCol = cell.column
             break
 
         # elif cell.value is None and lastCell.value is not None:
@@ -176,11 +176,22 @@ def add_member(identifier, strr=False):
 
 
 def check_eligible(ID):
+    row = find(ID, None, 2)[0]
+    days = ws.iter_rows('D' + str(row) + ':' + attCol + str(row))
+    notPres = 0
+    attend = 0
+    for i in list(days)[0]:
+        if i.value is None:
+            notPres += 1
+        else:
+            attend += 1
+    perc = round(attend / (attend + notPres) * 100, 0)
+
     # must add math to count attendance to classes
-    if ID == 'None' or ID == '':
-        return 'None'
-    else:
+    if perc > 60:
         return 'Yes'
+    else:
+        return 'No'
 
 
 signInList = []
@@ -206,7 +217,7 @@ def name_check_in_GUI():
 def retrieve_name_entry():
     f = FN.get()
     l = LN.get()
-    if f == '' or l == '':
+    if f.strip() == '' or l.strip() == '':
         FN.delete(0, END)
         LN.delete(0, END)
     else:
@@ -302,7 +313,9 @@ def display_member_info(memberIndex):
             color1, color2, color3, color4 = None, None, None, None
         else:
             color1, color2, color3, color4 = 'white', 'lightgreen', 'lightgreen', 'red'
-        eligible = check_eligible(memberIndex)
+        if memberIndex != '':
+            eligible = check_eligible(signInList[memberIndex][0])
+        eligible = "NO"
 
         if name == 'Not Applicable':
             color1 = 'Red'
@@ -336,7 +349,8 @@ def display_member_info(memberIndex):
 
     else:
         memberIndex = int(memberIndex)  # must incoperate excel doc into display process
-        labelIDs = member_info_template(signInList[memberIndex][0],signInList[memberIndex][1],signInList[memberIndex][2])
+        labelIDs = member_info_template(signInList[memberIndex][0], signInList[memberIndex][1],
+                                        signInList[memberIndex][2])
     return labelIDs
 
 
