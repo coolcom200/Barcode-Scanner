@@ -275,10 +275,16 @@ def retrieve_entry(name=False):
 clearEntry = Button(top, text='Clear', command=lambda: barcodeEntry.delete(0, END)).pack(side=LEFT)
 nameEntry = Button(top, text='Name Check In', command=name_check_in_GUI).pack(side=LEFT)
 
+smallMid = Frame(m1)
+m1.add(smallMid)
+
+Label(smallMid, text='Members that have checked in', font='Times 15 bold').grid(row=1, column=1)
+NumCheckIn = Label(smallMid, text="Checked In: ", font='Times 15 bold')
+smallMid.grid_columnconfigure(2, minsize=1300)
+NumCheckIn.grid(row=1, column=2)
+
 middle = Frame(m1)
 m1.add(middle)
-Label(middle, text='Members that have checked in', font='Times 15 bold').pack(fill=Y)
-
 # Members List
 scBr = Scrollbar(middle)
 scBr.pack(side=RIGHT, fill=Y)
@@ -297,9 +303,9 @@ def add_name_listbox(row):
     paid = ws.cell(row=row, column=3).value
     if paid is None:
         paid = 'NO'
-    # must append values to list
     dataList.insert(0, name)
     signInList.insert(0, [name, number, paid])
+    NumCheckIn.config(text='Checked In: ' + str(len(signInList)))
 
 
 # Member information
