@@ -7,6 +7,7 @@ from tkinter.ttk import *
 from openpyxl import load_workbook
 from openpyxl.cell import column_index_from_string as ColToInt
 from time import strftime
+from matplotlib import pyplot as plt
 
 date = strftime('%B %d %Y')  # Gets date in the from of MONTH DATE YEAR
 saveFile = 'ATT.xlsx'  # Sets the save file
@@ -128,6 +129,37 @@ def approve_payment(identifier):
     save()
 
 
+def gather_att_data():
+    indices = []
+    names = []
+    attendData = []
+    colTup = ws.columns
+    for column in colTup:
+        present = 0
+        for cell in column:
+            if cell.value is not None:
+                present += 1
+
+        attendData.append(present - 1)
+    attendData = attendData[3:]
+    for i in range(len(attendData)):
+        indices.append(i)
+        if i % 5 == 0:
+            names.append('Mt #' + str(i))
+        else:
+            names.append('')
+    return attendData, indices, names
+
+
+def show_graph():
+    data, indices, label = gather_att_data()
+    plt.bar(indices, data, 0.6)
+    indices = [x + 0.3 for x in indices]
+    print(indices)
+    plt.xticks(indices, label)
+    plt.show()
+
+
 def add_member(identifier, strr=False):
     choice = messagebox.askquestion('Not In Database',
                                     'Sorry you are not in the database.\nWould you like to become a member?')
@@ -230,8 +262,7 @@ menuB = Menu(menubar, tearoff=0)
 menuB2 = Menu(menubar, tearoff=0)
 menuB3 = Menu(menubar, tearoff=1)
 menuB.add_command(label="Exit", command=lambda: quit_handler())
-menuB2.add_command(label="Attendance Graph")
-menuB2.add_command(label='Total Member present')
+menuB2.add_command(label="Attendance Graph", command=show_graph)
 menuB2.add_command(label='Credit Eligible Members')
 menubar.add_cascade(label="File", menu=menuB)
 menubar.add_cascade(label='Analyze', menu=menuB2)
