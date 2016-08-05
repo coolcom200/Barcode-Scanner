@@ -3,7 +3,7 @@ import threading
 import time
 from tkinter import messagebox
 from sys import exit as Stp
-from tkinter.ttk import *
+# from tkinter.ttk import *
 from openpyxl import load_workbook
 from openpyxl.cell import column_index_from_string as ColToInt
 from time import strftime
@@ -155,7 +155,6 @@ def show_graph():
     data, indices, label = gather_att_data()
     plt.bar(indices, data, 0.6)
     indices = [x + 0.3 for x in indices]
-    print(indices)
     plt.xticks(indices, label)
     plt.show()
 
@@ -187,7 +186,7 @@ def add_member(identifier, strr=False):
                 questionF.destroy()
                 create_mem_row(StuNumber, FLname)
 
-            Button(questionF, text='Submit', command=num_ret).pack()
+            Button(questionF, text='Submit', font='Times 14 bold', relief="groove", command=num_ret).pack()
 
         else:
             StuNumber = identifier
@@ -204,7 +203,7 @@ def add_member(identifier, strr=False):
                 create_mem_row(StuNumber, FLname)
                 questionF.destroy()
 
-            Button(questionF, text='Submit', command=name_ret).pack()
+            Button(questionF, text='Submit', font='Times 14 bold', relief="groove", command=name_ret).pack()
 
 
 def check_eligible(ID):
@@ -230,7 +229,9 @@ signInList = []
 
 root = Tk()
 root.resizable(width=False, height=False)
-Style().configure("TButton", relief="flat", padding=5, font='Times 14 bold')
+
+
+# Style().configure("TButton", relief="groove", padding=5, font='Times 14 bold')
 
 
 def name_check_in_GUI():
@@ -243,7 +244,8 @@ def name_check_in_GUI():
     Label(popup, text='Enter Last Name').grid(row=2, column=1, sticky=W)
     LN = Entry(popup, font='Times 15 bold')
     LN.grid(row=2, column=2, sticky=W)
-    Button(popup, text='Check In', command=lambda: retrieve_name_entry()).grid(row=3, column=1, sticky=W)
+    Button(popup, text='Check In', font='Times 14 bold', relief="groove", command=lambda: retrieve_name_entry()).grid(
+        row=3, column=1, sticky=W)
 
 
 def retrieve_name_entry():
@@ -303,8 +305,10 @@ def retrieve_entry(name=False):
     check_in(identifier, name)
 
 
-clearEntry = Button(top, text='Clear', command=lambda: barcodeEntry.delete(0, END)).pack(side=LEFT)
-nameEntry = Button(top, text='Name Check In', command=name_check_in_GUI).pack(side=LEFT)
+clearEntry = Button(top, text='Clear', font='Times 14 bold', relief="groove",
+                    command=lambda: barcodeEntry.delete(0, END)).pack(side=LEFT)
+nameEntry = Button(top, text='Name Check In', font='Times 14 bold', relief="groove", command=name_check_in_GUI).pack(
+    side=LEFT)
 
 smallMid = Frame(m1)
 m1.add(smallMid)
@@ -333,31 +337,33 @@ def add_name_listbox(row):
     number = ws.cell(row=row, column=1).value
     paid = ws.cell(row=row, column=3).value
     if paid is None:
-        paid = 'NO'
+        paid = 'No'
     dataList.insert(0, name)
-    signInList.insert(0, [name, number, paid])
+    signInList.insert(0, [name, number, paid, row])
     NumCheckIn.config(text='Checked In: ' + str(len(signInList)))
 
 
 # Member information
 bottom = Frame(m1)
 m1.add(bottom)
+bottom.grid_columnconfigure(3, minsize=1400)
 
 
 def display_member_info(memberIndex):
-    def member_info_template(name='Not Applicable', number='Not Applicable', paid='NO'):
+    def member_info_template(name='Not Applicable', number='Not Applicable', paid='No'):
+
         if name == paid == number and name == 'None':
             color1, color2, color3, color4 = None, None, None, None
         else:
             color1, color2, color3, color4 = 'white', 'lightgreen', 'lightgreen', 'red'
         if memberIndex != '':
-            eligible = check_eligible(signInList[memberIndex][0])
+            eligible = check_eligible(signInList[memberIndex][0].lower())
         eligible = "NO"
 
         if name == 'Not Applicable':
             color1 = 'Red'
 
-        if paid == 'NO':
+        if paid == 'No':
             color3 = 'Red'
 
         if number == 'Not Applicable':
@@ -374,8 +380,72 @@ def display_member_info(memberIndex):
         payLab.grid(row=3, column=1, sticky=W)
         eligLab = Label(bottom, text='Eligible for Credit: ' + eligible, font='Times 15 bold', background=color4)
         eligLab.grid(row=4, column=1, sticky=W)
+        editbutton = Button(bottom, text='Edit', font='Times 13 bold', relief="groove")
+        editbutton.config(command=lambda:edit([nameLab, numLab, payLab, eligLab], editbutton, name, number, paid))
+        editbutton.grid(row=1, column=3)
 
-        return [nameLab, numLab, payLab, eligLab]
+        return [nameLab, numLab, payLab, eligLab, editbutton]
+
+    def edit(delete, editbutton, name, number, paid):
+
+        clean_mem_info_panel(delete)
+        dataList.selection_set(memberIndex)
+        name = name.split(' ')
+        firstNameStr = name[0][0].upper() + name[0][1:]
+        lastNameStr = name[1][0].upper() + name[1][1:]
+
+        bottom.grid_columnconfigure(3, minsize=1170)
+        editbutton.config(text='Done', command=lambda: save_mem_changes(fname, lname, sNum, payVar, editbutton
+                                                                        [radioBFrame, firstNLab, lastNLab,
+                                                                         num]))  # change command
+
+        firstNLab = Label(bottom, text='First Name: ', font='Times 15 bold')
+        firstNLab.grid(row=1, column=1, sticky=W)
+
+        fname = Entry(bottom, font='Times 15 bold', exportselection=0)
+        fname.insert(0, firstNameStr)
+        fname.grid(row=1, column=2, sticky=W)
+
+        lastNLab = Label(bottom, text='First Name: ', font='Times 15 bold')
+        lastNLab.grid(row=2, column=1, sticky=W)
+
+        lname = Entry(bottom, font='Times 15 bold', exportselection=0)
+        lname.grid(row=2, column=2, sticky=W)
+        lname.insert(0, lastNameStr)
+        num = Label(bottom, text='Number: ', font='Times 15 bold')
+        num.grid(row=3, column=1, sticky=W)
+
+        sNum = Entry(bottom, font='Times 15 bold', exportselection=0)
+        sNum.insert(0, number)
+        sNum.grid(row=3, column=2)
+
+        pay = Label(bottom, text='Paid: ', font='Times 15 bold')
+        pay.grid(row=4, column=1, sticky=W)
+        radioBFrame = Frame(bottom)
+        radioBFrame.grid(row=4, column=2, sticky=W)
+        payVar = StringVar()
+        Rb1 = Radiobutton(radioBFrame, text="Paid", variable=payVar, value="PAID", indicatoron=0, bd=4)
+        Rb1.grid(row=1, column=1, sticky=W)
+        Rb2 = Radiobutton(radioBFrame, text="Not Paid", variable=payVar, value='No', indicatoron=0, bd=4)
+        Rb2.grid(row=1, column=2, sticky=W)
+
+    def save_mem_changes(fN, lN, num, pay, delete, editbutton):
+        name = fN.get() + ' ' + lN.get()
+        name.lower()
+        number = num.get()
+        payment = pay.get()
+        if payment == 'No':
+            payment = None
+        row = signInList[memberIndex][3]
+        ws.cell(row=row, column=2, value=name)
+        ws.cell(row=row, column=1, value=number)
+        ws.cell(row=row, column=3, value=payment)
+        save()
+        delete = delete + fN + lN + num
+        clean_mem_info_panel(delete)
+        # nameLab, numLab, payLab, eligLab, paid = 0, 0, 0, 0, 0
+        # editbutton.config(text='Edit',
+        #                   command=lambda: edit([nameLab, numLab, payLab, eligLab], editbutton, name, number, paid))
 
     memberIndex = (str(memberIndex))
     memberIndex = memberIndex.replace('(', '')
@@ -385,7 +455,7 @@ def display_member_info(memberIndex):
         labelIDs = member_info_template('None', 'None', 'None')
 
     else:
-        memberIndex = int(memberIndex)  # must incoperate excel doc into display process
+        memberIndex = int(memberIndex)
         labelIDs = member_info_template(signInList[memberIndex][0], signInList[memberIndex][1],
                                         signInList[memberIndex][2])
     return labelIDs
@@ -395,11 +465,8 @@ def clean_mem_info_panel(labelIDList):
     if labelIDList is None:
         pass
     else:
-        l1, l2, l3, l4 = labelIDList[0], labelIDList[1], labelIDList[2], labelIDList[3]
-        l1.destroy()
-        l2.destroy()
-        l3.destroy()
-        l4.destroy()
+        for i in labelIDList:
+            i.destroy()
 
 
 def check_selection():
