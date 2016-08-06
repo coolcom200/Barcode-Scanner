@@ -286,8 +286,11 @@ def check_entry_length():
     while True:
         lengthE = len(barcodeEntry.get())
         # print(lengthE)
-        if lengthE == 9:
-            retrieve_entry()
+        try:
+            if lengthE == 9 and int(lengthE) > 0:
+                retrieve_entry()
+        except ValueError:
+            pass
         time.sleep(0.09)
 
 
