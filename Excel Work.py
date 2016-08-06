@@ -118,13 +118,32 @@ def approve_payment(identifier):
         ws.cell(row=row, column=3, value='PAID')
     save()
 
+def intput(x):
+    try:
+        y = int(input(x))
+        if y > 0:
+            return y
+        else:
+            print("Invalid Input!", end = " ")
+            return(intput(x))
+    except ValueError:
+        print("Invalid Input!", end = " ")
+        return(intput(x))
+
+def nameput(x):
+    y = input(x)
+    if y == "":
+        print("Invalid Input!", end=" ")
+        return (nameput(x))
+    else:
+        return y
 
 def add_member():
-    Fn = input('Enter First Name: ')
-    Ln = input('Enter Last Name: ')
+    Fn = nameput('Enter First Name: ')
+    Ln = nameput('Enter Last Name: ')
     FLname = Fn + Ln
     FLname = FLname.lower()
-    number = int(input('Number: '))
+    number = intput('Number: ')
     row = emptyRow()
     ws.cell(row=row, column=1, value=number)
     ws.cell(row=row, column=2, value=FLname)
