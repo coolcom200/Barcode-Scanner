@@ -119,6 +119,7 @@ def approve_payment(identifier):
     save()
 
 def intput(x):
+    """Ensures number entered is a natural number."""
     try:
         y = int(input(x))
         if y > 0:
@@ -131,6 +132,7 @@ def intput(x):
         return(intput(x))
 
 def nameput(x):
+    """Ensures name entered is not an empty string."""
     y = input(x)
     if y == "":
         print("Invalid Input!", end=" ")
@@ -154,4 +156,3 @@ find_empty_date_column()
 name_check_in('xc')
 # number_check_in(99)
 # approve_payment('js')
-# test comment
