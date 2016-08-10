@@ -106,9 +106,9 @@ def name_check_in(name):
     save()
 
 
-def check_in(identifier, UseName):
+def check_in(identifier, UserName):
     find_empty_date_column()
-    if UseName:
+    if UserName:
         # Name based check in
         popup.destroy()
         name_check_in(identifier.lower())
@@ -145,7 +145,7 @@ def gather_att_data():
     for i in range(len(attendData)):
         indices.append(i)
         if i % 5 == 0:
-            names.append('Mt #' + str(i))
+            names.append('Mt #' + str(i + 1))
         else:
             names.append('')
     return attendData, indices, names
@@ -153,9 +153,10 @@ def gather_att_data():
 
 def show_graph():
     data, indices, label = gather_att_data()
-    plt.bar(indices, data, 0.6)
+    plt.bar(indices, data, 0.6, color='green', edgecolor='green')
     indices = [x + 0.3 for x in indices]
     plt.xticks(indices, label)
+    plt.ylim([0, max(data) + 1])
     plt.show()
 
 
@@ -240,6 +241,7 @@ def name_check_in_GUI():
     popup.tkraise(root)
     Label(popup, text='Enter First Name').grid(row=1, column=1, sticky=W)
     FN = Entry(popup, font='Times 15 bold')
+    FN.focus()
     FN.grid(row=1, column=2, sticky=W)
     Label(popup, text='Enter Last Name').grid(row=2, column=1, sticky=W)
     LN = Entry(popup, font='Times 15 bold')
@@ -361,7 +363,7 @@ def display_member_info(memberIndex):
             color1, color2, color3, color4 = 'white', 'lightgreen', 'lightgreen', 'red'
         if memberIndex != '':
             eligible = check_eligible(signInList[memberIndex][0].lower())
-        eligible = "NO"
+        eligible = "NO"  # how does this work?
 
         if name == 'Not Applicable':
             color1 = 'Red'
@@ -384,13 +386,16 @@ def display_member_info(memberIndex):
         eligLab = Label(bottom, text='Eligible for Credit: ' + eligible, font='Times 15 bold', background=color4)
         eligLab.grid(row=4, column=1, sticky=W)
         editbutton = Button(bottom, text='Edit', font='Times 13 bold', relief="groove")
-        editbutton.config(command=lambda:edit([nameLab, numLab, payLab, eligLab], editbutton, name, number, paid))
+        if memberIndex == '':
+            editbutton.config(command=None)
+        else:
+            editbutton.config(command=lambda: edit([nameLab, numLab, payLab, eligLab], editbutton, name, number, paid))
         editbutton.grid(row=1, column=3)
 
         return [nameLab, numLab, payLab, eligLab, editbutton]
 
     def edit(delete, editbutton, name, number, paid):
-
+        dataList.config(state='disabled')
         clean_mem_info_panel(delete)
         dataList.selection_set(memberIndex)
         name = name.split(' ')
@@ -398,9 +403,9 @@ def display_member_info(memberIndex):
         lastNameStr = name[1][0].upper() + name[1][1:]
 
         bottom.grid_columnconfigure(3, minsize=1170)
-        editbutton.config(text='Done', command=lambda: save_mem_changes(fname, lname, sNum, payVar, editbutton
+        editbutton.config(text='Done', command=lambda: save_mem_changes(fname, lname, sNum, payVar, editbutton,
                                                                         [radioBFrame, firstNLab, lastNLab,
-                                                                         num]))  # change command
+                                                                         num, pay]))  # change command
 
         firstNLab = Label(bottom, text='First Name: ', font='Times 15 bold')
         firstNLab.grid(row=1, column=1, sticky=W)
@@ -427,15 +432,27 @@ def display_member_info(memberIndex):
         radioBFrame = Frame(bottom)
         radioBFrame.grid(row=4, column=2, sticky=W)
         payVar = StringVar()
+
         Rb1 = Radiobutton(radioBFrame, text="Paid", variable=payVar, value="PAID", indicatoron=0, bd=4)
         Rb1.grid(row=1, column=1, sticky=W)
         Rb2 = Radiobutton(radioBFrame, text="Not Paid", variable=payVar, value='No', indicatoron=0, bd=4)
         Rb2.grid(row=1, column=2, sticky=W)
+        if paid == 'No':
+            Rb2.select()
+        else:
+            Rb1.select()
 
-    def save_mem_changes(fN, lN, num, pay, delete, editbutton):
+    def save_mem_changes(fN, lN, num, pay, editbutton, delete):
+        dataList.config(state='normal')
+        dataList.selection_clear(0, END)
         name = fN.get() + ' ' + lN.get()
-        name.lower()
+        name = name.lower()
         number = num.get()
+        try:
+            number = int(number)
+        except ValueError:
+            num.delete(0, END)
+            return
         payment = pay.get()
         if payment == 'No':
             payment = None
@@ -443,12 +460,23 @@ def display_member_info(memberIndex):
         ws.cell(row=row, column=2, value=name)
         ws.cell(row=row, column=1, value=number)
         ws.cell(row=row, column=3, value=payment)
+        print(signInList[memberIndex])
+        name = name.split(' ')
+        name = name[0][0].upper() + name[0][1:] + ' ' + name[1][0].upper() + name[1][1:]
+        if payment is None:
+            payment = 'No'
+        signInList[memberIndex] = [name, number, payment, signInList[memberIndex][-1]]
+        print(signInList[memberIndex])
+        dataList.delete(memberIndex)
+        dataList.insert(memberIndex, name)
         save()
-        delete = delete + fN + lN + num
+        delete.append(fN)
+        delete.append(lN)
+        delete.append(num)
         clean_mem_info_panel(delete)
-        # nameLab, numLab, payLab, eligLab, paid = 0, 0, 0, 0, 0
-        # editbutton.config(text='Edit',
-        #                   command=lambda: edit([nameLab, numLab, payLab, eligLab], editbutton, name, number, paid))
+        nameLab, numLab, payLab, eligLab, paid = 0, 0, 0, 0, 0
+        editbutton.config(text='Edit',
+                          command=lambda: edit([nameLab, numLab, payLab, eligLab], editbutton, name, number, paid))
 
     memberIndex = (str(memberIndex))
     memberIndex = memberIndex.replace('(', '')
