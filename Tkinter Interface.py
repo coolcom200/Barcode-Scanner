@@ -232,19 +232,17 @@ root = Tk()
 root.resizable(width=False, height=False)
 
 
-# Style().configure("TButton", relief="groove", padding=5, font='Times 14 bold')
-
 
 def name_check_in_GUI():
     global popup, FN, LN
     popup = Toplevel()
     popup.tkraise(root)
     Label(popup, text='Enter First Name').grid(row=1, column=1, sticky=W)
-    FN = Entry(popup, font='Times 15 bold')
+    FN = Entry(popup, font='Times 15 bold', exportselection=0)
     FN.focus()
     FN.grid(row=1, column=2, sticky=W)
     Label(popup, text='Enter Last Name').grid(row=2, column=1, sticky=W)
-    LN = Entry(popup, font='Times 15 bold')
+    LN = Entry(popup, font='Times 15 bold', exportselection=0)
     LN.grid(row=2, column=2, sticky=W)
     Button(popup, text='Check In', font='Times 14 bold', relief="groove", command=lambda: retrieve_name_entry()).grid(
         row=3, column=1, sticky=W)
@@ -312,8 +310,8 @@ def retrieve_entry(name=False):
 
 clearEntry = Button(top, text='Clear', font='Times 14 bold', relief="groove",
                     command=lambda: barcodeEntry.delete(0, END)).pack(side=LEFT)
-nameEntry = Button(top, text='Name Check In', font='Times 14 bold', relief="groove", command=name_check_in_GUI).pack(
-    side=LEFT)
+nameEntry = Button(top, text='Name Check In', font='Times 14 bold', relief="groove", command=name_check_in_GUI)
+nameEntry.pack(side=LEFT)
 
 smallMid = Frame(m1)
 m1.add(smallMid)
@@ -346,12 +344,15 @@ def add_name_listbox(row):
     dataList.insert(0, name)
     signInList.insert(0, [name, number, paid, row])
     NumCheckIn.config(text='Checked In: ' + str(len(signInList)))
+    # dataList.selection_clear(1)
+    # dataList.selection_set(0)
+    barcodeEntry.focus_force()
 
 
 # Member information
 bottom = Frame(m1)
 m1.add(bottom)
-bottom.grid_columnconfigure(3, minsize=1400)
+bottom.grid_columnconfigure(3, minsize=1300)
 
 
 def display_member_info(memberIndex):
@@ -360,7 +361,7 @@ def display_member_info(memberIndex):
         if name == paid == number and name == 'None':
             color1, color2, color3, color4 = None, None, None, None
         else:
-            color1, color2, color3, color4 = 'white', 'lightgreen', 'lightgreen', 'red'
+            color1, color2, color3, color4 = None, 'lightgreen', 'lightgreen', 'red'
         if memberIndex != '':
             eligible = check_eligible(signInList[memberIndex][0].lower())
         eligible = "NO"  # how does this work?
@@ -396,13 +397,15 @@ def display_member_info(memberIndex):
 
     def edit(delete, editbutton, name, number, paid):
         dataList.config(state='disabled')
+        barcodeEntry.config(state='disabled')
+        nameEntry.config(state='disabled')
         clean_mem_info_panel(delete)
         dataList.selection_set(memberIndex)
         name = name.split(' ')
         firstNameStr = name[0][0].upper() + name[0][1:]
         lastNameStr = name[1][0].upper() + name[1][1:]
 
-        bottom.grid_columnconfigure(3, minsize=1170)
+        bottom.grid_columnconfigure(3, minsize=1000)
         editbutton.config(text='Done', command=lambda: save_mem_changes(fname, lname, sNum, payVar, editbutton,
                                                                         [radioBFrame, firstNLab, lastNLab,
                                                                          num, pay]))  # change command
@@ -444,6 +447,10 @@ def display_member_info(memberIndex):
 
     def save_mem_changes(fN, lN, num, pay, editbutton, delete):
         dataList.config(state='normal')
+        barcodeEntry.config(state='normal')
+        nameEntry.config(state='normal')
+        bottom.grid_columnconfigure(3,minsize = 1300)
+        barcodeEntry.focus_force()
         dataList.selection_clear(0, END)
         name = fN.get() + ' ' + lN.get()
         name = name.lower()
