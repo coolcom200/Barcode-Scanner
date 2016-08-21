@@ -416,7 +416,7 @@ def edit(memberIndex, delete, editbutton, name, number, paid):
     fname.insert(0, firstNameStr)
     fname.grid(row=1, column=2, sticky=W)
 
-    lastNLab = Label(bottom, text='First Name: ', font='Times 15 bold')
+    lastNLab = Label(bottom, text='Last Name: ', font='Times 15 bold')
     lastNLab.grid(row=2, column=1, sticky=W)
 
     lname = Entry(bottom, font='Times 15 bold', exportselection=0)
@@ -467,13 +467,13 @@ def save_mem_changes(memberIndex, fN, lN, num, pay, editbutton, delete):
     ws.cell(row=row, column=2, value=name)
     ws.cell(row=row, column=1, value=number)
     ws.cell(row=row, column=3, value=payment)
-    print(signInList[memberIndex])
+    #(signInList[memberIndex])
     name = name.split(' ')
     name = name[0][0].upper() + name[0][1:] + ' ' + name[1][0].upper() + name[1][1:]
     if payment is None:
         payment = 'No'
     signInList[memberIndex] = [name, number, payment, signInList[memberIndex][-1]]
-    print(signInList[memberIndex])
+    #print(signInList[memberIndex])
     dataList.delete(memberIndex)
     dataList.insert(memberIndex, name)
     save()
