@@ -21,7 +21,7 @@ def save():  # saves file
     except PermissionError:
         messagebox.showwarning(
             "Permission denied",
-            "Cannot read/write to this file:\n%s" % saveFile
+            "Cannot read/write to this file (Please close the file if opened):\n%s" % saveFile
         )
 
 
