@@ -15,7 +15,14 @@ counter = False
 
 
 def save():  # saves file
-    wb.save(saveFile)
+    # Prevents program from crashing when excel file is open (permission denied)
+    try:
+        wb.save(saveFile)
+    except PermissionError:
+        messagebox.showwarning(
+            "Permission denied",
+            "Cannot read/write to this file:\n%s" % saveFile
+        )
 
 
 def find(findValue, row=None, column=None):
