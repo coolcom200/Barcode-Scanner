@@ -8,7 +8,7 @@ from openpyxl.cell import column_index_from_string as ColToInt
 from matplotlib import pyplot as plt
 
 date = time.strftime('%B %d %Y')  # Gets date in the from of MONTH DATE YEAR
-saveFile = 'Attendance.xlsx'  # Sets the save file
+saveFile = 'ATT.xlsx'  # Sets the save file
 wb = load_workbook(saveFile)
 ws = wb.active
 counter = False
@@ -143,9 +143,7 @@ def gather_att_data():
     for i in range(len(attendData)):
         indices.append(i)
         if i % 5 == 0:
-            if i == 0:
-                i = 1
-            names.append('Mt #' + str(i))
+            names.append('Mt #' + str(i + 1))
         else:
             names.append('')
     return attendData, indices, names
@@ -156,9 +154,6 @@ def show_graph():
     plt.bar(indices, data, 0.6, color='green', edgecolor='green')
     indices = [x + 0.3 for x in indices]
     plt.xticks(indices, label)
-    plt.title("Attendance Graph")
-    plt.ylabel("Members Present")
-    plt.xlabel("Meetings")
     plt.ylim([0, max(data) + 1])
     plt.show()
 
@@ -223,7 +218,7 @@ def check_eligible(ID):
     perc = round(attend / (attend + notPres) * 100, 0)
 
     # must add math to count attendance to classes
-    if perc > 50:
+    if perc > 60:
         return 'Yes'
     else:
         return 'No'
@@ -232,8 +227,6 @@ def check_eligible(ID):
 signInList = []
 
 root = Tk()
-root.title("Attendance")
-root.iconbitmap('icon.ico')
 root.resizable(width=False, height=False)
 
 
@@ -266,10 +259,13 @@ def retrieve_name_entry():
 menubar = Menu(root)
 menuB = Menu(menubar, tearoff=0)
 menuB2 = Menu(menubar, tearoff=0)
+menuB3 = Menu(menubar, tearoff=1)
 menuB.add_command(label="Exit", command=lambda: quit_handler())
 menuB2.add_command(label="Attendance Graph", command=show_graph)
+menuB2.add_command(label='Credit Eligible Members')
 menubar.add_cascade(label="File", menu=menuB)
 menubar.add_cascade(label='Analyze', menu=menuB2)
+menubar.add_cascade(label='Help', menu=menuB3)
 root.configure(menu=menubar)
 
 m1 = PanedWindow(height=650, width=1000, orient=VERTICAL)
@@ -286,6 +282,7 @@ barcodeEntry.pack(side=LEFT)
 def check_entry_length():
     while True:
         lengthE = len(barcodeEntry.get())
+        # print(lengthE)
         try:
             if lengthE == 9 and int(lengthE) > 0:
                 retrieve_entry()
@@ -419,7 +416,7 @@ def edit(memberIndex, delete, editbutton, name, number, paid):
     fname.insert(0, firstNameStr)
     fname.grid(row=1, column=2, sticky=W)
 
-    lastNLab = Label(bottom, text='First Name: ', font='Times 15 bold')
+    lastNLab = Label(bottom, text='Last Name: ', font='Times 15 bold')
     lastNLab.grid(row=2, column=1, sticky=W)
 
     lname = Entry(bottom, font='Times 15 bold', exportselection=0)
@@ -470,11 +467,13 @@ def save_mem_changes(memberIndex, fN, lN, num, pay, editbutton, delete):
     ws.cell(row=row, column=2, value=name)
     ws.cell(row=row, column=1, value=number)
     ws.cell(row=row, column=3, value=payment)
+    #(signInList[memberIndex])
     name = name.split(' ')
     name = name[0][0].upper() + name[0][1:] + ' ' + name[1][0].upper() + name[1][1:]
     if payment is None:
         payment = 'No'
     signInList[memberIndex] = [name, number, payment, signInList[memberIndex][-1]]
+    #print(signInList[memberIndex])
     dataList.delete(memberIndex)
     dataList.insert(memberIndex, name)
     save()

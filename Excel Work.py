@@ -125,17 +125,14 @@ def intput(x):
         if y > 0:
             return y
         else:
-            print("Invalid Input!", end = " ")
             return(intput(x))
     except ValueError:
-        print("Invalid Input!", end = " ")
         return(intput(x))
 
 def nameput(x):
     """Ensures name entered is not an empty string."""
     y = input(x)
     if y == "":
-        print("Invalid Input!", end=" ")
         return (nameput(x))
     else:
         return y
