@@ -3,7 +3,7 @@ from openpyxl.cell import column_index_from_string as ColToInt
 from time import strftime
 
 date = strftime('%B %d %Y')  # Gets date in the from of MONTH DATE YEAR
-saveFile = 'ATT.xlsx'  # Sets the save file
+saveFile = 'Attendance.xlsx'  # Sets the save file
 wb = load_workbook(saveFile)
 ws = wb.active
 
