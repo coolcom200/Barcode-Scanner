@@ -8,7 +8,7 @@ from openpyxl.cell import column_index_from_string as ColToInt
 from matplotlib import pyplot as plt
 
 date = time.strftime('%B %d %Y')  # Gets date in the from of MONTH DATE YEAR
-saveFile = 'ATT.xlsx'  # Sets the save file
+saveFile = 'Attendance.xlsx'  # Sets the save file
 wb = load_workbook(saveFile)
 ws = wb.active
 counter = False
