@@ -4,7 +4,7 @@ import time
 from tkinter import messagebox
 from sys import exit as Stp
 from openpyxl import load_workbook
-from openpyxl.cell import column_index_from_string as ColToInt
+from string import ascii_uppercase;
 from matplotlib import pyplot as plt
 
 date = time.strftime('%B %d %Y')  # Gets date in the from of MONTH DATE YEAR
@@ -12,6 +12,14 @@ saveFile = 'Attendance.xlsx'  # Sets the save file
 wb = load_workbook(saveFile)
 ws = wb.active
 counter = False
+
+
+def ColToInt(column):
+    sum = 0
+    sum+=ascii_uppercase.index(column[-1])+1
+    sum+=(len(column)-1)*26
+    print(sum)
+    return sum
 
 
 def save():  # saves file
@@ -220,7 +228,7 @@ def add_member(identifier, strr=False):
 
 def check_eligible(ID):
     row = find(ID, None, 2)[0]
-    days = ws.iter_rows('D' + str(row) + ':' + attCol + str(row))
+    days = ws['D' + str(row) + ':' + attCol + str(row)]
     notPres = 0
     attend = 0
     for i in list(days)[0]:
