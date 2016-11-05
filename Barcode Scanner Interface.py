@@ -16,8 +16,8 @@ counter = False
 
 def ColToInt(column):
     sum = 0
-    sum+=ascii_uppercase.index(column[-1])+1
-    sum+=(len(column)-1)*26
+    sum += ascii_uppercase.index(column[-1]) + 1
+    sum += (len(column) - 1) * 26
     print(sum)
     return sum
 
@@ -179,17 +179,38 @@ def show_graph():
     plt.show()
 
 
+def create_mem_row(num, name):
+    num = int(num)
+    row = emptyRow()
+    ws.cell(row=row, column=1, value=num)
+    ws.cell(row=row, column=2, value=name)
+    check_in(num, False)
+    save()
+
+
+def num_retV1(questionF, num, FLname):
+    StuNumber = num.get()
+    questionF.unbind("<Return>")
+    if len(StuNumber) == 9:
+        questionF.destroy()
+        create_mem_row(StuNumber, FLname)
+    else:
+        num.config(bg="orange red")
+        num.delete(0, END)
+
+
+def name_retV2(questionF, Fn, Ln, StuNumber):
+    questionF.unbind("<Return>")
+    FLname = Fn.get() + ' ' + Ln.get()
+    FLname = FLname.lower()
+    create_mem_row(StuNumber, FLname)
+    questionF.destroy()
+
+
 def add_member(identifier, strr=False):
+    global b1
     choice = messagebox.askquestion('Not In Database',
                                     'Sorry you are not in the database.\nWould you like to become a member?')
-
-    def create_mem_row(num, name):
-        num = int(num)
-        row = emptyRow()
-        ws.cell(row=row, column=1, value=num)
-        ws.cell(row=row, column=2, value=name)
-        check_in(num, False)
-        save()
 
     if choice == 'yes':
         FLname = None
@@ -198,32 +219,35 @@ def add_member(identifier, strr=False):
         if strr:
             FLname = identifier
             Label(questionF, text='Enter Student Number:').pack()
-            num = Entry(questionF)
+            num = Entry(questionF, font='Times 14 bold', exportselection=0)
             num.pack()
+            num.focus_force()
 
-            def num_ret():
-                StuNumber = num.get()
-                questionF.destroy()
-                create_mem_row(StuNumber, FLname)
+            b1 = Button(questionF, text='Submit', font='Times 14 bold', relief="groove",
+                        command=lambda: num_retV1(questionF, num, FLname))
+            b1.pack()
+            questionF.bind("<Return>", b1I)
 
-            Button(questionF, text='Submit', font='Times 14 bold', relief="groove", command=num_ret).pack()
 
         else:
             StuNumber = identifier
             Label(questionF, text='Enter First Name: ').pack()
-            Fn = Entry(questionF)
+            Fn = Entry(questionF, font='Times 14 bold', exportselection=0)
             Fn.pack()
+            Fn.focus_force()
+
             Label(questionF, text='Enter Last Name: ').pack()
-            Ln = Entry(questionF)
+            Ln = Entry(questionF, font='Times 14 bold', exportselection=0)
             Ln.pack()
 
-            def name_ret():
-                FLname = Fn.get() + ' ' + Ln.get()
-                FLname = FLname.lower()
-                create_mem_row(StuNumber, FLname)
-                questionF.destroy()
+            b1 = Button(questionF, text='Submit', font='Times 14 bold', relief="groove",
+                        command=lambda: name_retV2(questionF, Fn, Ln, StuNumber))
+            b1.pack()
+            questionF.bind("<Return>", b1I)
 
-            Button(questionF, text='Submit', font='Times 14 bold', relief="groove", command=name_ret).pack()
+
+def b1I(event):
+    b1.invoke()
 
 
 def check_eligible(ID):
@@ -254,7 +278,7 @@ root.resizable(width=False, height=False)
 
 
 def name_check_in_GUI():
-    global popup, FN, LN
+    global popup, FN, LN, b1
     popup = Toplevel()
     popup.tkraise(root)
     Label(popup, text='Enter First Name').grid(row=1, column=1, sticky=W)
@@ -264,8 +288,9 @@ def name_check_in_GUI():
     Label(popup, text='Enter Last Name').grid(row=2, column=1, sticky=W)
     LN = Entry(popup, font='Times 15 bold', exportselection=0)
     LN.grid(row=2, column=2, sticky=W)
-    Button(popup, text='Check In', font='Times 14 bold', relief="groove", command=lambda: retrieve_name_entry()).grid(
-        row=3, column=1, sticky=W)
+    b1 = Button(popup, text='Check In', font='Times 14 bold', relief="groove", command=lambda: retrieve_name_entry())
+    b1.grid(row=3, column=1, sticky=W)
+    popup.bind("<Return>", b1I)
 
 
 def retrieve_name_entry():
@@ -295,7 +320,7 @@ m1.pack(fill=BOTH, expand=1)
 top = Frame(m1)
 m1.add(top)
 
-barcodeEntry = Entry(top, font='Times 24 bold', width=44)
+barcodeEntry = Entry(top, font='Times 24 bold', width=44, exportselection=0)
 barcodeEntry.pack(side=LEFT)
 
 
