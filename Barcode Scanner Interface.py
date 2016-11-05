@@ -193,7 +193,11 @@ def num_retV1(questionF, num, FLname):
     questionF.unbind("<Return>")
     if len(StuNumber) == 9:
         questionF.destroy()
-        create_mem_row(StuNumber, FLname)
+        exists = find(StuNumber, None, 1)
+        print("Exists = ", exists, StuNumber)
+        messagebox._show("Error", "The student number is already in the system","error")
+        if exists[0] is not None and exists[1] is not None:
+            create_mem_row(StuNumber, FLname)
     else:
         num.config(bg="orange red")
         num.delete(0, END)
