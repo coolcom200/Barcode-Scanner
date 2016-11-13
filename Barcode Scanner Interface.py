@@ -18,7 +18,6 @@ def ColToInt(column):
     sum = 0
     sum += ascii_uppercase.index(column[-1]) + 1
     sum += (len(column) - 1) * 26
-    print(sum)
     return sum
 
 
@@ -194,7 +193,7 @@ def num_retV1(questionF, num, FLname):
     if len(StuNumber) == 9:
         questionF.destroy()
         exists = find(StuNumber, None, 1)
-        print("Exists = ", exists, StuNumber)
+
         messagebox._show("Error", "The student number is already in the system","error")
         if exists[0] is not None and exists[1] is not None:
             create_mem_row(StuNumber, FLname)
@@ -390,7 +389,7 @@ def add_name_listbox(row):
     dataList.insert(0, name)
     signInList.insert(0, [name, number, paid, row])
     NumCheckIn.config(text='Checked In: ' + str(len(signInList)))
-    dataList.selection_clear(1)
+    dataList.selection_clear(0,END)
     dataList.selection_set(0)
     counter = True
     barcodeEntry.focus_force()
