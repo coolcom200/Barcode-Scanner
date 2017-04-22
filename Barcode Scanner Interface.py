@@ -102,7 +102,8 @@ def number_check_in(num):
     row, col = find(num, None, 1)
     if row is None and col is None:
         add_member(num)
-    elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
+    # elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
+    else:
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
         add_name_listbox(row)
     save()
@@ -112,7 +113,8 @@ def name_check_in(name):
     row, col = find(name, None, 2)
     if row is None and col is None:
         add_member(name, True)
-    elif ws.cell(row=row, column=ColToInt(attCol)).value is None:
+    # elif ws.cell(row=row, column=ColToInt(attCol)).value is not None:
+    else:
         timeIn = time.strftime("%I:%M %p")
         ws.cell(row=row, column=ColToInt(attCol), value=timeIn)
         add_name_listbox(row)
@@ -188,15 +190,18 @@ def create_mem_row(num, name):
 
 
 def num_retV1(questionF, num, FLname):
-    StuNumber = num.get()
-    questionF.unbind("<Return>")
-    if len(StuNumber) == 9:
+    StuNumber = num.get().replace(" ", "")
+    if len(StuNumber) == 9 and StuNumber.isdigit():
         questionF.destroy()
-        exists = find(StuNumber, None, 1)
-
-        messagebox._show("Error", "The student number is already in the system","error")
+        exists = find(int(StuNumber), None, 1)
         if exists[0] is not None and exists[1] is not None:
+            messagebox._show("Error", "The student number is already in the system", "error")
+
+        else:
             create_mem_row(StuNumber, FLname)
+        questionF.unbind("<Return>")
+
+
     else:
         num.config(bg="orange red")
         num.delete(0, END)
@@ -204,7 +209,7 @@ def num_retV1(questionF, num, FLname):
 
 def name_retV2(questionF, Fn, Ln, StuNumber):
     questionF.unbind("<Return>")
-    FLname = Fn.get() + ' ' + Ln.get()
+    FLname = Fn.get().replace(" ", "") + ' ' + Ln.get().replace(" ", "")
     FLname = FLname.lower()
     create_mem_row(StuNumber, FLname)
     questionF.destroy()
@@ -386,10 +391,16 @@ def add_name_listbox(row):
     paid = ws.cell(row=row, column=3).value
     if paid is None:
         paid = 'No'
-    dataList.insert(0, name)
-    signInList.insert(0, [name, number, paid, row])
+    if [name, number, paid, row] in signInList:
+        dataList.delete(signInList.index([name, number, paid, row]))
+        dataList.insert(0, name)
+        signInList.remove([name, number, paid, row])
+        signInList.insert(0, [name, number, paid, row])
+    else:
+        dataList.insert(0, name)
+        signInList.insert(0, [name, number, paid, row])
     NumCheckIn.config(text='Checked In: ' + str(len(signInList)))
-    dataList.selection_clear(0,END)
+    dataList.selection_clear(0, END)
     dataList.selection_set(0)
     counter = True
     barcodeEntry.focus_force()
@@ -406,7 +417,7 @@ def member_info_template(memberIndex, name='Not Applicable', number='Not Applica
         color1, color2, color3, color4 = None, None, None, None
     else:
         color1, color2, color3, color4 = None, 'lightgreen', 'lightgreen', 'red'
-    eligible = "NO"
+    eligible = "No"
     if memberIndex != '':
         eligible = check_eligible(signInList[memberIndex][0].lower())
 
